@@ -284,5 +284,15 @@ namespace UDP_Send
         {
 
         }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
