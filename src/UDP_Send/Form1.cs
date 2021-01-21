@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Runtime.InteropServices;
 
 namespace UDP_Send
 {
@@ -19,6 +20,24 @@ namespace UDP_Send
         public Form1()
         {
             InitializeComponent();
+        }
+
+                public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HT_CAPTION = 0x2;
+
+        
+        [DllImportAttribute("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        [DllImportAttribute("user32.dll")]
+        public static extern bool ReleaseCapture();
+
+        private void Form1_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
         }
 
 
@@ -278,11 +297,6 @@ namespace UDP_Send
             //pushdata = Encoding.UTF8.GetBytes("sendMessage"); //把要送出的資料轉成byte型態
             pushdata = Encoding.UTF8.GetBytes(QQQ); //把要送出的資料轉成byte型態
             Server.SendTo(pushdata, remoteIP); //送出的資料跟目的
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void button10_Click(object sender, EventArgs e)
